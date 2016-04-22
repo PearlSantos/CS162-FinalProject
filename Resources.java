@@ -1,16 +1,16 @@
 public class Resources{
-	int id;
-	int held;
-	int max;
+	public int id;
+	public int held = 0;
+	public int max = 0;
 	public Resources(int id){
 		this.id = id;
 	}
 	
-	public setHeld(int held){
+	public void setHeld(int held){
 		this.held = held;
 	}
 	
-	public setMax(int max){
+	public void setMax(int max){
 		this.max = max;
 	}
 }
