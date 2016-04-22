@@ -8,11 +8,19 @@ public class DeadlockDetector{
 		Scanner br = new Scanner(new FileReader("input.txt"));
 		int numOfTestCases = Integer.parseInt(br.nextLine().trim());
 		ArrayList<Process> process = new ArrayList<Process>();
+		int[] availableRes;
 		
 		for(int i = 0; i < numOfTestCases; i++){
 			String[] inputLine = br.nextLine().trim().split(" ");
 			int numOfProcesses = Integer.parseInt(inputLine[0].trim());
 			int numOfResources = Integer.parseInt(inputLine[1].trim());
+			availableRes = new int[numOfResources];
+			for(int j = 0; j < numOfResources; j++){
+				availableRes[j] = br.nextInt();
+			}
+			
+			br.nextLine();
+			
 			for(int j = 0; j < numOfProcesses; j++){
 				Process newProcess = new Process(j);
 				for(int k = 0; k < numOfResources; k++){
@@ -32,7 +40,7 @@ public class DeadlockDetector{
 					Resources res = newProcess.getResources(k);
 					res.setMax(br.nextInt() + res.held);
 				}
-				br.nextLine();
+				//br.nextLine();
 			}
 			
 		}
