@@ -31,7 +31,7 @@ public class DeadlockDetector{
 				}
 				process.add(newProcess);
 				process.set(j, newProcess);
-				br.nextLine();
+				
 			}
 			
 			for(int j = 0; j < numOfProcesses; j++){
@@ -40,7 +40,7 @@ public class DeadlockDetector{
 					Resources res = newProcess.getResources(k);
 					res.setMax(br.nextInt() + res.held);
 				}
-				//br.nextLine();
+				
 			}
 			
 		}
@@ -50,7 +50,29 @@ public class DeadlockDetector{
 			process.get(i).print();
 		}
 		
+		bankersAlgorithm(processs,);
 		
 	}
+	
+	public void bankersAlgorithm( ArrayList<Process> pList, int a )
+		{ // pList = requesting processes, a = available resources
+			while( !pList.isEmpty() ){
+				boolean found = false; // safely allocated to a process?
+				for( Process p : pList ){
+					int c = p.held;
+					int m = p.max;
+					if( m – c <= a ){ // can allocate resources; grant process' request/s
+						 a = a + c; // and assume it finishes
+						 pList.remove( p );
+						 found = true;
+					}
+				}
+				if( !found )
+				System.out.println("Deadlock has occurred/will occur.");
+			}
+		System.out.println("Deadlock will not occur");
+	}
+	
+	
 
 }
