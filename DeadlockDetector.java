@@ -8,7 +8,7 @@ public class DeadlockDetector{
 		Scanner br = new Scanner(new FileReader("input.txt"));
 		int numOfTestCases = Integer.parseInt(br.nextLine().trim());
 		ArrayList<Process> process = new ArrayList<Process>();
-		int[] availableRes;
+		int[] availableRes = null;
 		
 		for(int i = 0; i < numOfTestCases; i++){
 			String[] inputLine = br.nextLine().trim().split(" ");
@@ -22,7 +22,7 @@ public class DeadlockDetector{
 			br.nextLine();
 			
 			for(int j = 0; j < numOfProcesses; j++){
-				Process newProcess = new Process(j);
+				Process newProcess = new Process(j + 1);
 				for(int k = 0; k < numOfResources; k++){
 					Resources res = new Resources(k);
 					res.setHeld(br.nextInt());
@@ -50,29 +50,63 @@ public class DeadlockDetector{
 			process.get(i).print();
 		}
 		
-		bankersAlgorithm(processs,);
+		bankersAlgorithm(process,availableRes);
 		
 	}
 	
-	public void bankersAlgorithm( ArrayList<Process> pList, int a )
+	public static void bankersAlgorithm( ArrayList<Process> pList, int[] resourceList )
 		{ // pList = requesting processes, a = available resources
+			String path = "";
 			while( !pList.isEmpty() ){
-				boolean found = false; // safely allocated to a process?
-				for( Process p : pList ){
-					int c = p.held;
-					int m = p.max;
-					if( m – c <= a ){ // can allocate resources; grant process' request/s
-						 a = a + c; // and assume it finishes
-						 pList.remove( p );
-						 found = true;
+				
+				//boolean found = false; // safely allocated to a process?
+				boolean safe = false;
+				for( int k=0; k < pList.size(); k++ ){
+					Process p = pList.get(k);
+					for(int i=0; i < resourceList.length; i++){
+						int c = p.resources.get(i).held;
+						int m = p.resources.get(i).max;
+						//int counter = 0;
+						 
+							if( (m - c) <= resourceList[i] ){ // can allocate resources; grant process' request/s
+								 //resourceList[i] = resourceList[i]  + c; // and assume it finishes
+								 //pList.remove( p );
+								 //counter++;
+								 safe = true;
+							}
+							else{
+								safe = false;
+								break;
+							}
+							
+							
+						}
+						
+						if(safe){
+							for(int i = 0; i < resourceList.length; i++){
+								resourceList[i] = resourceList[i]  + p.resources.get(i).held; // and assume it finishes
+							}
+							path += p.id + " ";
+							pList.remove(p);
+						}
+					
 					}
+					if( !safe ){
+						System.out.println("Deadlock has occurred/will occur.");
+						return;
+					}
+					
+					
 				}
-				if( !found )
-				System.out.println("Deadlock has occurred/will occur.");
+				
+				//to change	
+				System.out.println(path);
+					
+				
 			}
-		System.out.println("Deadlock will not occur");
+		
 	}
 	
 	
 
-}
+

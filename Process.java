@@ -1,6 +1,6 @@
 import java.util.*;
 public class Process{
-	int id;
+	public int id;
 	public ArrayList<Resources> resources = new ArrayList<Resources>();
 	
 	public Process(int id){
