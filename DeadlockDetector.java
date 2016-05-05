@@ -5,21 +5,22 @@ import java.util.*;
 public class DeadlockDetector{
 
 	public static void main(String args[]) throws IOException{
-		Scanner br = new Scanner(new FileReader("input.txt"));
-		int numOfTestCases = Integer.parseInt(br.nextLine().trim());
-		ArrayList<Process> process = new ArrayList<Process>();
+		Scanner br = new Scanner(new FileReader("trial.txt"));
+		int numOfTestCases = br.nextInt();
+		ArrayList<Process> process = new ArrayList<Process>();;
 		int[] availableRes = null;
 		
 		for(int i = 0; i < numOfTestCases; i++){
-			String[] inputLine = br.nextLine().trim().split(" ");
-			int numOfProcesses = Integer.parseInt(inputLine[0].trim());
-			int numOfResources = Integer.parseInt(inputLine[1].trim());
+			//String[] inputLine = br.nextLine().trim().split(" ");
+			process = new ArrayList<Process>();
+			int numOfProcesses = br.nextInt();
+			int numOfResources = br.nextInt();
 			availableRes = new int[numOfResources];
 			for(int j = 0; j < numOfResources; j++){
 				availableRes[j] = br.nextInt();
 			}
 			
-			br.nextLine();
+			//br.nextLine();
 			
 			for(int j = 0; j < numOfProcesses; j++){
 				Process newProcess = new Process(j + 1);
@@ -43,14 +44,12 @@ public class DeadlockDetector{
 				
 			}
 			
+			bankersAlgorithm(process,availableRes);
+			
 		}
 		
-		//printing input
-		for(int i = 0; i < process.size(); i++){
-			process.get(i).print();
-		}
 		
-		bankersAlgorithm(process,availableRes);
+		
 		
 	}
 	
@@ -63,6 +62,7 @@ public class DeadlockDetector{
 				boolean safe = false;
 				for( int k=0; k < pList.size(); k++ ){
 					Process p = pList.get(k);
+					System.out.println(p.id);
 					for(int i=0; i < resourceList.length; i++){
 						int c = p.resources.get(i).held;
 						int m = p.resources.get(i).max;
