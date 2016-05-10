@@ -5,13 +5,14 @@ import java.util.*;
 public class DeadlockDetector{
 
 	public static void main(String args[]) throws IOException{
-		Scanner br = new Scanner(new FileReader("trial.txt"));
+		Scanner br = new Scanner(new FileReader("SuperInput.txt"));
 		int numOfTestCases = br.nextInt();
 		ArrayList<Process> process = new ArrayList<Process>();;
 		int[] availableRes = null;
 		
 		for(int i = 0; i < numOfTestCases; i++){
 			//String[] inputLine = br.nextLine().trim().split(" ");
+			System.out.println("Test input #" + (i+1));
 			process = new ArrayList<Process>();
 			int numOfProcesses = br.nextInt();
 			int numOfResources = br.nextInt();
@@ -62,7 +63,7 @@ public class DeadlockDetector{
 				boolean safe = false;
 				for( int k=0; k < pList.size(); k++ ){
 					Process p = pList.get(k);
-					System.out.println(p.id);
+					//System.out.println(p.id);
 					for(int i=0; i < resourceList.length; i++){
 						int c = p.resources.get(i).held;
 						int m = p.resources.get(i).max;
